@@ -514,3 +514,20 @@ window.addEventListener("load", function () {
     },
   });
 })();
+
+/* Custom works cursor (red circle + "learn more") */
+(function () {
+  var worksSection = document.getElementById("works");
+  var cursor = document.querySelector(".works-cursor");
+  if (!worksSection || !cursor) return;
+
+  worksSection.addEventListener("mousemove", function (e) {
+    cursor.style.left = e.clientX + "px";
+    cursor.style.top = e.clientY + "px";
+    cursor.classList.add("visible");
+  });
+
+  worksSection.addEventListener("mouseleave", function () {
+    cursor.classList.remove("visible");
+  });
+})();

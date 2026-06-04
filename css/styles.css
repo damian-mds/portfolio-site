@@ -495,6 +495,56 @@ html {
     padding-top: 5vh;
 }
 
+/* ========== Works Custom Cursor ========== */
+#works {
+    cursor: none;
+}
+
+.works-cursor {
+    position: fixed;
+    top: 0;
+    left: 0;
+    z-index: 9999;
+    pointer-events: none;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+    display: flex;
+    align-items: center;
+    gap: 0.8em;
+    transform: translate(20px, -50%);
+}
+
+.works-cursor.visible {
+    opacity: 1;
+}
+
+/* Red circle with blink animation */
+.works-cursor::before {
+    content: "";
+    width: 30px;
+    height: 30px;
+    border-radius: 50%;
+    background: rgba(220, 60, 60, 0.85);
+    display: block;
+    flex-shrink: 0;
+    animation: cursor-blink 2s ease-in-out infinite;
+}
+
+@keyframes cursor-blink {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.3; }
+}
+
+/* "learn more" text */
+.works-cursor-text {
+    font-family: "nb_architekt_stdbold", sans-serif;
+    font-size: 18px;
+    color: #fff;
+    letter-spacing: 0.08em;
+    text-transform: lowercase;
+    white-space: nowrap;
+}
+
 /* ========== Brand Bar ========== */
 .brandbar {
     position: fixed;
