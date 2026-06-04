@@ -1,0 +1,243 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="utf-8" />
+        <title>DAMIXN</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1" />
+
+        <link
+            rel="stylesheet"
+            href="css/styles.css"
+            type="text/css"
+            charset="utf-8"
+        />
+
+        <link
+            rel="icon"
+            href="img/favicon/icon.svg"
+            type="image/svg+xml"
+        />
+        <link
+            rel="icon"
+            href="img/favicon/icon.ico"
+            type="image/x-icon"
+        />
+        <link
+            rel="icon"
+            href="img/favicon/icon.png"
+            sizes="any"
+            type="image/png"
+        />
+        <link
+            rel="apple-touch-icon"
+            href="img/favicon/icon.png"
+        />
+
+        <script src="https://unpkg.com/lenis@1.1.22/dist/lenis.min.js"></script>
+
+        <!-- GSAP + ScrollTrigger -->
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+
+        <script type="importmap">
+        {
+            "imports": {
+                "@chenglou/pretext": "https://unpkg.com/@chenglou/pretext@0.0.6/dist/layout.js"
+            }
+        }
+        </script>
+
+        <script src="jar/scripts.js" defer type="module"></script>
+    </head>
+
+    <body>
+        <div id="preload-screen">
+            <div class="preload-content">
+                <div class="preload-buttons">
+                    <button id="enter-sound" class="preload-btn">Enter with Sound</button>
+                    <button id="enter-nosound" class="preload-btn">Enter without Sound</button>
+                </div>
+            </div>
+        </div>
+
+        <!--Navigation Bar-->
+        <nav class="brandbar" aria-label="Brand">
+            <div class="brandbar-container">
+                <a id="brand" href="#home" aria-label="Home">
+                    <span class="brand-text">damixn</span>
+                </a>
+            </div>
+        </nav>
+        <nav class="navbar" aria-label="Primary">
+            <ul class="nav-links">
+                <li><a href="#home">home</a></li>
+                <li><a href="#works">works</a></li>
+                <li><a href="#about">about</a></li>
+                <li><a href="#contact">contact</a></li>
+            </ul>
+        </nav>
+
+        <button id="sound-toggle" class="sound-toggle" aria-label="Toggle sound">
+            <span class="text-on">sound on</span>
+            <span class="text-off" style="display:none;">sound off</span>
+        </button>
+
+        <header id="home" class="section active">
+            <video class="bg-video" autoplay loop muted playsinline disablepictureinpicture id="bg-video">
+                <source src="vid/badasf.mp4" type="video/mp4" />
+                <source src="vid/badasf.webm" type="video/webm" />
+                Your browser does not support the video tag.
+            </video>
+
+            <div class="typewriter">
+                <h2>For those who seek a</h2>
+                <h1
+                    class="typewrite"
+                    data-period="2000"
+                    data-type='["Photographer","Videographer", "UI/UX Designer"]'
+                >
+                    <span class="wrap"></span>
+                </h1>
+
+                <h3>"blending the line between art and design, <br> in pursuit of a one of a kind experience"</h3>
+
+                <p class="please-scroll">please scroll</p>
+            </div>
+
+            <!-- Act 01 text -->
+            <div class="act-text" aria-label="Act 01">
+                <span class="act">act</span><span class="number">01</span>
+            </div>
+
+            <!-- Time widget -->
+            <aside
+                id="time-widget"
+                aria-live="polite"
+                aria-label="Auckland local time"
+            >
+                <div class="time-inner">
+                    <div class="time-row">
+                        <div class="time-temp" id="time-temp">--:--</div>
+                    </div>
+                    <div class="time-meta">
+                        <span id="time-desc"></span>
+
+                    </div>
+                </div>
+            </aside>
+        </header>
+
+        <section id="works" class="section">
+            <div class="gallery-track">
+                <!-- Slide 1 — video background (badasf.mp4) -->
+                <div class="gallery-slide">
+                    <video class="project-video" autoplay loop muted playsinline disablepictureinpicture>
+                        <source src="vid/pizzaria.mp4" type="video/mp4" />
+                        <source src="vid/pizzaria.webm" type="video/webm" />
+                    </video>
+                    <div class="project-info">
+                        <div class="project-number">01</div>
+                        <div class="project-title">Rustic Pizzaria</div>
+                        <div class="project-desc">Filmography & Editing</div>
+                    </div>
+                </div>
+                <!-- Slide 2 -->
+                <div class="gallery-slide">
+                    <div class="project-image" style="background-image: url('img/about-bg.JPG');"></div>
+                    <div class="project-info">
+                        <div class="project-number">02</div>
+                        <div class="project-title">UI/UX Design</div>
+                        <div class="project-desc">Mobile banking app redesign for Gen-Z users.</div>
+                    </div>
+                </div>
+                <!-- Slide 3 -->
+                <div class="gallery-slide">
+                    <video class="project-video" autoplay loop muted playsinline disablepictureinpicture>
+                        <source src="vid/badasf.mp4" type="video/mp4" />
+                        <source src="vid/badasf.webm" type="video/webm" />
+                    </video>
+                    <div class="project-info">
+                        <div class="project-number">03</div>
+                        <div class="project-title">badasf</div>
+                        <div class="project-desc">Filmography & Editing</div>
+                    </div>
+                </div>
+                <!-- Slide 4 -->
+                <div class="gallery-slide">
+                    <div class="project-image" style="background-image: url('img/project-4.jpg');"></div>
+                    <div class="project-info">
+                        <div class="project-number">04</div>
+                        <div class="project-title">Photography</div>
+                        <div class="project-desc">Editorial shoot for an independent fashion label.</div>
+                    </div>
+                </div>
+                <!-- Slide 5 -->
+                <div class="gallery-slide">
+                    <div class="project-image" style="background-image: url('img/project-5.jpg');"></div>
+                    <div class="project-info">
+                        <div class="project-number">05</div>
+                        <div class="project-title">Web Experience</div>
+                        <div class="project-desc">Immersive portfolio site for a mixed-reality studio.</div>
+                    </div>
+                </div>
+            </div>
+            <!-- Persistent info overlay (follows slide, not scrollable away) -->
+            <div class="persistent-project-info">
+                <div class="project-number">01</div>
+                <div class="project-title">Brand Identity</div>
+                <div class="project-desc">Visual identity system for a boutique coffee roastery.</div>
+            </div>
+            <div class="act-text" aria-label="Act 02">
+                <span class="act">act</span><span class="number">02</span>
+            </div>
+        </section>
+
+        <section id="about" class="section">
+            <div class="about-content">
+                <h2>About</h2>
+                <p class="about-paragraph">
+                    <span class="about-line">My name is Damian and I <span class="about-emphasis">design stuff</span> :)
+                    <span class="about-highlight">Good design solves a problem</span>, and <span class="about-highlight">good art evokes emotion</span>.</span>
+                    <span class="about-line">And at the intersection you find an <span class="about-emphasis">experience unlike no other</span>.</span>
+                    <span class="about-line">At the foundation of what I do lies a very simple mythos, foster
+                    a <span class="about-highlight">relationship between user and design</span>. Humans are social creatures,</span>
+                    <span class="about-line">and as such we crave <span class="about-emphasis">connection</span>, it brings us together, it brings us closer.</span>
+                    <span class="about-line">Why <span class="about-highlight">design</span> when you can <span class="about-emphasis">nurture</span>? Give your product the care it deserves, and
+                    give your users a <span class="about-highlight">connection</span> unlike no other. For truly <span class="about-emphasis">memorable experiences</span>.</span></span>
+                </p>
+            </div>
+            <div class="act-text" aria-label="Act 03">
+                <span class="act">act</span><span class="number">03</span>
+            </div>
+        </section>
+
+        <footer id="contact" class="section">
+            <div class="act-text fin" aria-label="fin.">
+                <span class="act">fin</span><span class="number">.</span>
+            </div>
+            <div id="center" class="contact-row">
+                <div id="damian">Damian Chen |&nbsp;</div>
+                <div id="instagram">
+                    <a
+                        href="https://www.instagram.com/d.amixn_/"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        >Instagram&nbsp;</a
+                    >
+                </div>
+                <div id="linkedin">
+                    <a
+                        href="https://www.linkedin.com/in/damian-chen-1b262b254/"
+                        rel="noopener noreferrer"
+                        target="_blank"
+                        >LinkedIn&nbsp;</a
+                    >
+                </div>
+                <div id="email">
+                    <a href="mailto:damianchen@outlook.co.nz">Email</a>
+                </div>
+            </div>
+            <div class="copyright-line">© 2026 DAMIXN. All Rights Reserved.</div>
+        </footer>
+    </body>
+</html>

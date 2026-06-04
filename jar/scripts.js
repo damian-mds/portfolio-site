@@ -430,16 +430,30 @@ window.addEventListener("load", function () {
     if (info && !hasVideo) info.style.display = "none";
   });
 
-  /* Show persistent info during horizontal scroll */
-  var ppiClass = "works-visible";
-
-  // Mark as hidden by default, shown only during horizontal scroll
-  if (persistentInfo) {
-    persistentInfo.classList.remove(ppiClass);
+  /* Populate persistent info with slide 0 data immediately */
+  function populateInitialInfo() {
+    var slide0 = slides[0].querySelector(".project-info");
+    if (slide0 && persistentInfo) {
+      var num = slide0.querySelector(".project-number");
+      var ttl = slide0.querySelector(".project-title");
+      var desc = slide0.querySelector(".project-desc");
+      var numEl = persistentInfo.querySelector(".project-number");
+      var ttlEl = persistentInfo.querySelector(".project-title");
+      var descEl = persistentInfo.querySelector(".project-desc");
+      if (numEl && num) numEl.textContent = num.textContent;
+      if (ttlEl && ttl) ttlEl.textContent = ttl.textContent;
+      if (descEl && desc) descEl.textContent = desc.textContent;
+    }
   }
 
-  /* Hide persistent info when works section is scrolled past vertically */
+  /* Show persistent info when works section enters view (on page load / scroll into view) */
+  var ppiClass = "works-visible";
+
   if (persistentInfo) {
+    populateInitialInfo();
+    persistentInfo.classList.add(ppiClass);
+
+    /* Hide persistent info when works section is scrolled past vertically */
     ScrollTrigger.create({
       trigger: worksSection,
       start: "bottom top",
@@ -464,12 +478,8 @@ window.addEventListener("load", function () {
       var translateX = -progress * (window.innerWidth * (totalSlides - 1));
       gsap.set(galleryTrack, { x: translateX });
 
-      /* Show/hide persistent info based on horizontal scroll progress */
-      if (progress > 0.05) {
-        persistentInfo && persistentInfo.classList.add(ppiClass);
-      } else {
-        persistentInfo && persistentInfo.classList.remove(ppiClass);
-      }
+      /* Persistent info stays visible throughout horizontal scroll (not shown) */
+      persistentInfo && persistentInfo.classList.add(ppiClass);
 
       /* Update persistent info text to match current slide */
       if (persistentInfo) {
