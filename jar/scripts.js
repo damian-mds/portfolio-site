@@ -464,6 +464,25 @@ window.addEventListener("load", function () {
 
   var totalSlides = slides.length;
 
+  /* --- Chelsea gallery refs (slide index 1, slide 2) --- */
+  var chGallery = document.querySelector("#slide2-gallery .chelsea-gallery");
+  var chPhotos = chGallery ? chGallery.querySelectorAll(".chelsea-photo") : [];
+  var totalPhotos = chPhotos.length;
+  var chActive = 0;
+  for (var _cp = 0; _cp < totalPhotos; _cp++) {
+    if (_cp === 0) chPhotos[_cp].classList.add("active");
+    else chPhotos[_cp].classList.remove("active");
+  }
+
+  function goPhoto(idx) {
+    if (idx === chActive) return;
+    chPhotos[chActive].classList.remove("active");
+    chPhotos[chActive].classList.add("transitioning");
+    chPhotos[idx].classList.remove("transitioning");
+    chPhotos[idx].classList.add("active");
+    chActive = idx;
+  }
+
   /* Horizontal scroll: pin section, move track left */
   ScrollTrigger.create({
     trigger: worksSection,
@@ -509,6 +528,38 @@ window.addEventListener("load", function () {
           var saturation = Math.round(colorStrength * 100);
           var bright = (0.7 + colorStrength * 0.25).toFixed(2);
           img.style.filter = "grayscale(" + (100 - saturation) / 100 + ") brightness(" + bright + ")";
+        }
+      }
+
+      /* --- Chelsea gallery: cycle photos when horizontal scroll is in slide 2 zone --- */
+      if (totalPhotos > 0) {
+        // Slide 2 (index 1) center is at progress 1/(totalSlides-1) ≈ 0.25 for 5 slides
+        // Gallery zone: 0.15 to 0.35 (a 20% zone around slide 2's center)
+        var center1 = 1 / (totalSlides - 1);  // ~0.25 for 5 slides
+        var zoneWidth = 0.12;  // 12% on each side of slide center
+        var chStart = center1 - zoneWidth;
+        var chEnd = center1 + zoneWidth;
+
+        if (progress >= chStart && progress <= chEnd) {
+          var subProgress = (progress - chStart) / (chEnd - chStart);  // 0 → 1 within zone
+          subProgress = Math.max(0, Math.min(1, subProgress));
+          var photoIdx = Math.floor(subProgress * totalPhotos);
+          photoIdx = Math.max(0, Math.min(totalPhotos - 1, photoIdx));
+          goPhoto(photoIdx);
+
+          // Update persistent info from slide 2 project-info (only in gallery zone)
+          var slide2Info = slides[1].querySelector(".project-info");
+          if (slide2Info) {
+            var numEl2 = persistentInfo.querySelector(".project-number");
+            var ttlEl2 = persistentInfo.querySelector(".project-title");
+            var descEl2 = persistentInfo.querySelector(".project-desc");
+            var srcNum = slide2Info.querySelector(".project-number");
+            var srcTtl = slide2Info.querySelector(".project-title");
+            var srcDesc = slide2Info.querySelector(".project-desc");
+            if (numEl2 && srcNum) numEl2.textContent = srcNum.textContent;
+            if (ttlEl2 && srcTtl) ttlEl2.textContent = srcTtl.textContent;
+            if (descEl2 && srcDesc) descEl2.textContent = srcDesc.textContent;
+          }
         }
       }
     },

@@ -343,6 +343,33 @@ html {
     object-position: center;
 }
 
+/* Chelsea photo gallery inside slide 2 — stacked crossfade */
+.chelsea-gallery {
+    position: absolute;
+    inset: 0;
+    overflow: hidden;
+}
+
+.chelsea-photo {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+    opacity: 0;
+    transition: opacity 0.4s ease, transform 0.7s ease;
+}
+
+.chelsea-photo.active {
+    opacity: 1;
+    z-index: 1;
+}
+
+.chelsea-photo.transitioning {
+    transform: scale(1.03);
+}
+
 /* Project info — bottom-left corner of each slide */
 .project-info {
     position: absolute;
