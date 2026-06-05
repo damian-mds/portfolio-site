@@ -16,8 +16,6 @@
     });
 
     lenis.on("scroll", function () {
-      window.dispatchEvent(new Event("scroll"));
-
       /* Active section highlight */
       updateActiveLink();
     });
@@ -92,11 +90,7 @@
     /* Initial state */
     updateActiveLink();
 
-    function raf(time) {
-      lenis.raf(time);
-      requestAnimationFrame(raf);
-    }
-    requestAnimationFrame(raf);
+    /* Let Lenis handle its own RAF loop (no custom RAF needed — Lenis manages this internally) */
     window.lenis = lenis;
   } catch (err) {
     console.warn("Lenis init failed:", err);
@@ -216,8 +210,10 @@ window.addEventListener("load", function () {
     preload.classList.add("hidden");
 
     if (enableSound && bgVideo) {
-      bgVideo.muted = false;
-      bgVideo.play().catch(function () {});
+      try {
+        bgVideo.muted = false;
+        bgVideo.play().catch(function () {});
+      } catch (e) { /* autoplay policy — ignored */ }
       window._soundOn = true;
     } else if (bgVideo) {
       bgVideo.muted = true;
@@ -271,20 +267,6 @@ window.addEventListener("load", function () {
   });
 
   window._syncSoundIcon = updateIcon;
-})();
-
-// Navbar scroll opacity
-(function () {
-  var nav = document.querySelector(".navbar");
-  if (!nav) return;
-  var threshold = 80;
-
-  function onScroll() {
-    nav.classList.toggle("scrolled", window.scrollY > threshold);
-  }
-
-  window.addEventListener("scroll", onScroll, { passive: true });
-  onScroll();
 })();
 
 
