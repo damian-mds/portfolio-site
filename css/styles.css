@@ -370,15 +370,16 @@ html {
     transform: scale(1.03);
 }
 
-/* Scroll indicator — row of dots below project info on slide 2 */
+/* Scroll indicator — row of dots centred at the bottom */
 .scroll-indicator {
     position: absolute;
     bottom: 5vh;
-    right: 5vw;
+    left: 0;
+    right: 0;
     z-index: 2;
     pointer-events: none;
     display: flex;
-    flex-direction: row-reverse;
+    justify-content: center;
     gap: 8px;
 }
 
