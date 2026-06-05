@@ -672,28 +672,28 @@ worksSection.addEventListener("mouseleave", function () {
 
 /* Clickable gallery slides → navigate to works.html */
 (function () {
-var slides = document.querySelectorAll(".gallery-slide");
-if (slides.length === 0) return;
+  var slides = document.querySelectorAll(".gallery-slide");
+  if (slides.length === 0) return;
 
-/* Mapping: slide index → works.html card link
-   Slide 0 (Rustic Pizzaria) -> first card (Video)
-   Slide 1 (Chelsea) -> second card (Photography)
-   Slide 2 (badasf) -> third card (Filmography)
-   Slide 3 (Brand Identity) -> fourth card (Design) */
-var slideToWorksLink = [
-  "#card-video",
-  "#card-chelsea",
-  "#card-badasf",
-  "#card-brand",
-];
+  /* Mapping: slide index → works.html card link
+     Slide 0 (Rustic Pizzaria) -> first card (Video)
+     Slide 1 (Chelsea) -> second card (Photography)
+     Slide 2 (badasf) -> third card (Filmography)
+     Slide 3 (Brand Identity) -> fourth card (Design) */
+  var slideToWorksLink = [
+    "#card-video",
+    "#card-chelsea",
+    "#card-badasf",
+    "#card-brand",
+  ];
 
-slides.forEach(function (slide, idx) {
-  slide.style.cursor = "pointer";
-  slide.addEventListener("click", function () {
-    var link = slideToWorksLink[idx];
-    if (link) {
-      window.location.href = "html/works.html" + link;
-    }
+  slides.forEach(function (slide, idx) {
+    slide.style.cursor = "pointer";
+    slide.addEventListener("click", function () {
+      var link = slideToWorksLink[idx];
+      if (link) {
+        window.location.href = "html/works.html" + link;
+      }
+    });
   });
-});
 })();
