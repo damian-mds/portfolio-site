@@ -835,3 +835,151 @@ html {
     transform: translateY(40px);
     will-change: transform, opacity;
 }
+
+/* ========== Works Page Styles ========== */
+
+/* Works hero section */
+.works-hero {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    min-height: 50vh;
+    background: #000;
+    text-align: center;
+    padding: 10vh 5vw;
+}
+
+.works-title {
+    font-family: "nb_architekt_std_neuebold", sans-serif;
+    font-size: var(--fs-xlarge);
+    color: #fff;
+    margin: 0 0 2vh 0;
+    letter-spacing: 0.1em;
+}
+
+.works-subtitle {
+    font-family: "JetBrains Mono", sans-serif;
+    font-size: clamp(14px, 1.4vw, 18px);
+    color: #888;
+    letter-spacing: 0.15em;
+    text-transform: lowercase;
+    margin: 0;
+}
+
+/* Works gallery grid */
+.works-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(min(45vw, 500px), 1fr));
+    gap: clamp(1rem, 2vw, 2rem);
+    padding: clamp(3rem, 5vw, 6rem) clamp(5vw, 8vw, 8vw) clamp(5rem, 8vh, 8rem);
+    background: #000;
+}
+
+/* Individual work card */
+.work-card {
+    display: block;
+    position: relative;
+    overflow: hidden;
+    border-radius: 4px;
+    background: #111;
+    transition: transform 0.4s ease;
+    cursor: pointer;
+}
+
+.work-card:hover {
+    transform: translateY(-4px);
+}
+
+.work-card:hover .work-thumb {
+    filter: grayscale(0) brightness(1);
+}
+
+.work-thumb {
+    display: block;
+    width: 100%;
+    aspect-ratio: 16 / 10;
+    object-fit: cover;
+    object-position: center;
+    filter: grayscale(1) brightness(0.6);
+    transition: filter 0.5s ease;
+}
+
+/* Work card info overlay */
+.work-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: clamp(0.8rem, 1.5vw, 1.2rem);
+    background: linear-gradient(transparent, rgba(0, 0, 0, 0.8));
+    display: flex;
+    flex-direction: column;
+    gap: 0.3em;
+    font-family: "JetBrains Mono", sans-serif;
+    pointer-events: none;
+}
+
+.work-category {
+    font-size: clamp(10px, 0.9vw, 13px);
+    color: var(--accent);
+    text-transform: uppercase;
+    letter-spacing: 0.15em;
+}
+
+.work-title {
+    font-family: "nb_architekt_std_neuebold", sans-serif;
+    font-size: clamp(16px, 1.5vw, 22px);
+    color: #fff;
+    letter-spacing: 0.05em;
+}
+
+.work-year {
+    font-size: clamp(11px, 1vw, 14px);
+    color: #666;
+}
+
+/* Contact section for works page */
+.contact-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    background: #000;
+    text-align: center;
+    padding: 15vh 5vw 10vh;
+}
+
+.contact-section .contact-row {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    justify-content: center;
+    align-items: center;
+    margin-bottom: 2vh;
+}
+
+.contact-section #instagram a,
+.contact-section #linkedin a,
+.contact-section #email a {
+    font-family: "nb_architekt_std_neuebold", sans-serif;
+    font-size: clamp(18px, 2vw, 28px);
+    color: #fff;
+    text-decoration: none;
+}
+
+.contact-section #instagram a:hover {
+    background: linear-gradient(180deg, orange, rgb(243, 29, 172));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.contact-section #linkedin a:hover {
+    color: rgb(88, 126, 187);
+}
+
+.contact-section #email a:hover {
+    background: linear-gradient(0deg, rgb(230, 230, 230), rgb(70, 70, 70));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
