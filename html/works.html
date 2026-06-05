@@ -71,7 +71,7 @@
         <!-- Works gallery grid -->
         <section class="works-grid section" id="works-grid">
             <!-- Rustic Pizzaria -->
-            <a href="../index.html#works" class="work-card">
+            <a id="card-video" href="../index.html?slide=0" class="work-card">
                 <img src="../img/pizzaria-thumb.jpg" class="work-thumb" alt="Rustic Pizzaria" />
                 <div class="work-info">
                     <span class="work-category">Video</span>
@@ -81,7 +81,7 @@
             </a>
 
             <!-- Chelsea -->
-            <a href="../index.html#works" class="work-card">
+            <a id="card-chelsea" href="../index.html?slide=1" class="work-card">
                 <img src="../img/chelsea/chelsea1.jpg" class="work-thumb" alt="Chelsea" />
                 <div class="work-info">
                     <span class="work-category">Photography</span>
@@ -91,7 +91,7 @@
             </a>
 
             <!-- Badasf -->
-            <a href="../index.html#works" class="work-card">
+            <a id="card-badasf" href="../index.html?slide=2" class="work-card">
                 <img src="../img/badasf-thumb.jpg" class="work-thumb" alt="badasf" />
                 <div class="work-info">
                     <span class="work-category">Filmography</span>
@@ -101,7 +101,7 @@
             </a>
 
             <!-- Brand Identity (Coffee Roastery) -->
-            <a href="../index.html#works" class="work-card">
+            <a id="card-brand" href="../index.html#works" class="work-card">
                 <img src="../img/pizzaria-thumb.jpg" class="work-thumb" alt="Brand Identity" />
                 <div class="work-info">
                     <span class="work-category">Design</span>
@@ -132,5 +132,19 @@
                 &copy; 2026 DAMIXN. All Rights Reserved.
             </div>
         </footer>
+
+        <!-- Scroll to card fragment on load (e.g. from index.html slide click) -->
+        <script>
+            (function () {
+                var hash = window.location.hash.substring(1);
+                if (!hash) return;
+                var card = document.getElementById(hash);
+                if (card) {
+                    window.addEventListener("load", function () {
+                        card.scrollIntoView({ behavior: "smooth" });
+                    });
+                }
+            })();
+        </script>
     </body>
 </html>

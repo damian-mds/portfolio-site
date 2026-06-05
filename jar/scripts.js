@@ -446,12 +446,18 @@ window.addEventListener("load", function () {
     }
   }
 
-  /* Show persistent info when works section enters view (on page load / scroll into view) */
+  /* Show persistent info when works section enters view (scroll into view) */
   var ppiClass = "works-visible";
 
   if (persistentInfo) {
     populateInitialInfo();
-    persistentInfo.classList.add(ppiClass);
+
+    /* Show persistent info when works section comes into view */
+    ScrollTrigger.create({
+      trigger: worksSection,
+      start: "top top",
+      onEnter: function () { persistentInfo.classList.add(ppiClass); },
+    });
 
     /* Hide persistent info when works section is scrolled past vertically */
     ScrollTrigger.create({
@@ -607,6 +613,50 @@ window.addEventListener("load", function () {
           }
         }
       }
+    },
+  });
+
+  /* Jump to a specific slide from URL (?slide=X) */
+  var slideParam = (new URLSearchParams(window.location.search)).get("slide");
+  if (slideParam !== null) {
+    var targetSlide = parseInt(slideParam, 10);
+    if (isNaN(targetSlide) || targetSlide < 0 || targetSlide >= totalSlides) targetSlide = 0;
+    /* Scroll to works section and set horizontal position */
+    window.addEventListener("load", function () {
+      window.scrollTo(0, 0);
+      /* Force the track to the target slide */
+      var targetProgress = targetSlide / (totalSlides - 1);
+      var targetX = -targetProgress * (window.innerWidth * (totalSlides - 1));
+      gsap.set(galleryTrack, { x: targetX });
+      /* Update persistent info to match target slide */
+      if (persistentInfo) {
+        var targetInfo = slides[targetSlide].querySelector(".project-info");
+        if (targetInfo) {
+          var numEl = persistentInfo.querySelector(".project-number");
+          var ttlEl = persistentInfo.querySelector(".project-title");
+          var descEl = persistentInfo.querySelector(".project-desc");
+          var num = targetInfo.querySelector(".project-number");
+          var ttl = targetInfo.querySelector(".project-title");
+          var desc = targetInfo.querySelector(".project-desc");
+          if (numEl && num) numEl.textContent = num.textContent;
+          if (ttlEl && ttl) ttlEl.textContent = ttl.textContent;
+          if (descEl && desc) descEl.textContent = desc.textContent;
+        }
+        /* Also make persistent info visible when jumping to a slide */
+        if (persistentInfo) persistentInfo.classList.add(ppiClass);
+      }
+    });
+  }
+
+  /* Update URL when user scrolls between slides */
+  ScrollTrigger.create({
+    trigger: worksSection,
+    onUpdate: function (self) {
+      var progress = self.progress;
+      var currentSlide = Math.round(progress * (totalSlides - 1));
+      currentSlide = Math.max(0, Math.min(totalSlides - 1, currentSlide));
+      var newUrl = window.location.pathname + "?slide=" + currentSlide;
+      window.history.replaceState(null, "", newUrl);
     },
   });
 })();
