@@ -510,12 +510,17 @@ window.addEventListener("load", function () {
       var chEnd = 1 / (totalSlides - 1) + 0.5 / (totalSlides - 1);    // 0.75
 
       /* Manually control horizontal track position:
-         - 0→chStart: stay on slide 1 (plenty of scroll space before sliding)
+         - 0→chStart: slide 1 → slide 2 (smooth horizontal scroll)
          - chStart→chEnd: gallery zone, stay on slide 2, cycle photos
          - chEnd→1: slide 2 → slide 3 */
       if (progress < chStart) {
-        /* Before gallery zone: lock track to slide 1 (x: 0) */
-        gsap.set(galleryTrack, { x: 0 });
+        /* Slide 1 → slide 2: track slides from 0 to -100vw */
+        var subProgress = progress / chStart; // 0 to 1
+        subProgress = Math.max(0, Math.min(1, subProgress));
+        // Ease so the transition is smooth, not linear
+        var eased = subProgress * subProgress * (3 - 2 * subProgress);
+        var translateX = -window.innerWidth * eased;
+        gsap.set(galleryTrack, { x: translateX });
       } else if (progress <= chEnd) {
         /* Gallery zone: lock track to slide 2 (x: -100vw) */
         gsap.set(galleryTrack, { x: -window.innerWidth });
