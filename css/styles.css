@@ -716,16 +716,20 @@ html {
     inset: 0;
     z-index: 9999;
     background: #000;
+    min-height: 100vh;
+    min-width: 100vw;
     display: flex;
     align-items: center;
     justify-content: center;
     opacity: 1;
     transition: opacity 0.6s ease;
+    overflow: hidden;
 }
 
 #preload-screen.hidden {
     opacity: 0;
     pointer-events: none;
+    display: none !important;
 }
 
 .preload-content {
