@@ -655,17 +655,45 @@ window.addEventListener("load", function () {
 
 /* Custom works cursor (red circle + "learn more") */
 (function () {
-  var worksSection = document.getElementById("works");
-  var cursor = document.querySelector(".works-cursor");
-  if (!worksSection || !cursor) return;
+var worksSection = document.getElementById("works");
+var cursor = document.querySelector(".works-cursor");
+if (!worksSection || !cursor) return;
 
-  worksSection.addEventListener("mousemove", function (e) {
-    cursor.style.left = e.clientX + "px";
-    cursor.style.top = e.clientY + "px";
-    cursor.classList.add("visible");
-  });
+worksSection.addEventListener("mousemove", function (e) {
+  cursor.style.left = e.clientX + "px";
+  cursor.style.top = e.clientY + "px";
+  cursor.classList.add("visible");
+});
 
-  worksSection.addEventListener("mouseleave", function () {
-    cursor.classList.remove("visible");
+worksSection.addEventListener("mouseleave", function () {
+  cursor.classList.remove("visible");
+});
+})();
+
+/* Clickable gallery slides → navigate to works.html */
+(function () {
+var slides = document.querySelectorAll(".gallery-slide");
+if (slides.length === 0) return;
+
+/* Mapping: slide index → works.html card link
+   Slide 0 (Rustic Pizzaria) -> first card (Video)
+   Slide 1 (Chelsea) -> second card (Photography)
+   Slide 2 (badasf) -> third card (Filmography)
+   Slide 3 (Brand Identity) -> fourth card (Design) */
+var slideToWorksLink = [
+  "#card-video",
+  "#card-chelsea",
+  "#card-badasf",
+  "#card-brand",
+];
+
+slides.forEach(function (slide, idx) {
+  slide.style.cursor = "pointer";
+  slide.addEventListener("click", function () {
+    var link = slideToWorksLink[idx];
+    if (link) {
+      window.location.href = "html/works.html" + link;
+    }
   });
+});
 })();
