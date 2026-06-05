@@ -505,8 +505,28 @@ window.addEventListener("load", function () {
     ease: "none",
     onUpdate: function (self) {
       var progress = self.progress;
-      var translateX = -progress * (window.innerWidth * (totalSlides - 1));
-      gsap.set(galleryTrack, { x: translateX });
+      /* Slide 2 gallery zone boundaries */
+      var chStart = 1 / (totalSlides - 1) - 0.5 / (totalSlides - 1);  // 0.25
+      var chEnd = 1 / (totalSlides - 1) + 0.5 / (totalSlides - 1);    // 0.75
+
+      /* Manually control horizontal track position:
+         - 0→chStart: stay on slide 1 (plenty of scroll space before sliding)
+         - chStart→chEnd: gallery zone, stay on slide 2, cycle photos
+         - chEnd→1: slide 2 → slide 3 */
+      if (progress < chStart) {
+        /* Before gallery zone: lock track to slide 1 (x: 0) */
+        gsap.set(galleryTrack, { x: 0 });
+      } else if (progress <= chEnd) {
+        /* Gallery zone: lock track to slide 2 (x: -100vw) */
+        gsap.set(galleryTrack, { x: -window.innerWidth });
+      } else {
+        /* Past gallery zone: slide 2 → slide 3, smooth ease */
+        var normalised = (progress - chEnd) / (1 - chEnd);
+        normalised = Math.max(0, Math.min(1, normalised));
+        var eased = normalised * normalised * (3 - 2 * normalised);
+        var translateX = -window.innerWidth * (1 + eased);
+        gsap.set(galleryTrack, { x: translateX });
+      }
 
       /* Persistent info stays visible throughout horizontal scroll (not shown) */
       persistentInfo && persistentInfo.classList.add(ppiClass);
@@ -544,9 +564,7 @@ window.addEventListener("load", function () {
 
       /* --- Chelsea gallery (slide 2): cycle all 8 photos across the full gallery zone, then resume horizontal scroll to slide 3 --- */
       if (totalPhotos > 0) {
-        // Slide 2 (index 1) is centered at progress 0.5, spanning 0.33 to 0.67 (full slide width)
-        var chStart = 1 / (totalSlides - 1) - 0.5 / (totalSlides - 1);  // 0.333
-        var chEnd = 1 / (totalSlides - 1) + 0.5 / (totalSlides - 1);    // 0.667
+        /* chStart / chEnd are already defined at the top of onUpdate */
 
         // Hide indicator dots outside the gallery zone
         if (scrollIndicator) {
@@ -574,20 +592,6 @@ window.addEventListener("load", function () {
             if (ttlEl2 && srcTtl) ttlEl2.textContent = srcTtl.textContent;
             if (descEl2 && srcDesc) descEl2.textContent = srcDesc.textContent;
           }
-
-          // Lock horizontal position to slide 2 (x = -100vw) during cycling
-          // so the track does not advance to slide 3 until all photos are cycled
-          gsap.set(galleryTrack, { x: -window.innerWidth });
-        } else if (progress > chEnd) {
-          // Past the gallery zone: ease horizontal from slide 2 → slide 3
-          // Progress runs from 0 (chEnd) to 1 (end of section)
-          var normalised = (progress - chEnd) / (1 - chEnd);
-          normalised = Math.max(0, Math.min(1, normalised));
-          // Ease so the slide-in feels smooth, not abrupt
-          var eased = normalised * normalised * (3 - 2 * normalised);
-          // Slide 2 is at -100vw, slide 3 is at -200vw
-          var translateX = -window.innerWidth * (1 + eased);
-          gsap.set(galleryTrack, { x: translateX });
         }
       }
     },
