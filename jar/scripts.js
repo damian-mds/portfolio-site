@@ -446,12 +446,18 @@ window.addEventListener("load", function () {
     }
   }
 
-  /* Show persistent info when works section enters view (on page load / scroll into view) */
+  /* Show persistent info when works section enters view (scroll into view) */
   var ppiClass = "works-visible";
 
   if (persistentInfo) {
     populateInitialInfo();
-    persistentInfo.classList.add(ppiClass);
+
+    /* Show persistent info when works section comes into view */
+    ScrollTrigger.create({
+      trigger: worksSection,
+      start: "top top",
+      onEnter: function () { persistentInfo.classList.add(ppiClass); },
+    });
 
     /* Hide persistent info when works section is scrolled past vertically */
     ScrollTrigger.create({
@@ -636,6 +642,8 @@ window.addEventListener("load", function () {
           if (ttlEl && ttl) ttlEl.textContent = ttl.textContent;
           if (descEl && desc) descEl.textContent = desc.textContent;
         }
+        /* Also make persistent info visible when jumping to a slide */
+        if (persistentInfo) persistentInfo.classList.add(ppiClass);
       }
     });
   }
