@@ -531,17 +531,15 @@ window.addEventListener("load", function () {
         }
       }
 
-      /* --- Chelsea gallery: cycle photos when horizontal scroll is in slide 2 zone --- */
+      /* --- Chelsea gallery (slide 2): cycle all 8 photos across the full gallery zone, then resume horizontal scroll to slide 3 --- */
       if (totalPhotos > 0) {
-        // Slide 2 (index 1) center is at progress 1/(totalSlides-1) ≈ 0.25 for 5 slides
-        // Gallery zone: 0.15 to 0.35 (a 20% zone around slide 2's center)
-        var center1 = 1 / (totalSlides - 1);  // ~0.25 for 5 slides
-        var zoneWidth = 0.12;  // 12% on each side of slide center
-        var chStart = center1 - zoneWidth;
-        var chEnd = center1 + zoneWidth;
+        // Slide 2 (index 1) is centered at progress 0.5, spanning 0.33 to 0.67 (full slide width)
+        var chStart = 1 / (totalSlides - 1) - 0.5 / (totalSlides - 1);  // 0.333
+        var chEnd = 1 / (totalSlides - 1) + 0.5 / (totalSlides - 1);    // 0.667
 
         if (progress >= chStart && progress <= chEnd) {
-          var subProgress = (progress - chStart) / (chEnd - chStart);  // 0 → 1 within zone
+          // Cycle 8 photos across the ENTIRE gallery zone (100%)
+          var subProgress = (progress - chStart) / (chEnd - chStart);
           subProgress = Math.max(0, Math.min(1, subProgress));
           var photoIdx = Math.floor(subProgress * totalPhotos);
           photoIdx = Math.max(0, Math.min(totalPhotos - 1, photoIdx));
@@ -560,6 +558,20 @@ window.addEventListener("load", function () {
             if (ttlEl2 && srcTtl) ttlEl2.textContent = srcTtl.textContent;
             if (descEl2 && srcDesc) descEl2.textContent = srcDesc.textContent;
           }
+
+          // Lock horizontal position to slide 2 (x = -100vw) during cycling
+          // so the track does not advance to slide 3 until all photos are cycled
+          gsap.set(galleryTrack, { x: -window.innerWidth });
+        } else if (progress > chEnd) {
+          // Past the gallery zone: ease horizontal from slide 2 → slide 3
+          // Progress runs from 0 (chEnd) to 1 (end of section)
+          var normalised = (progress - chEnd) / (1 - chEnd);
+          normalised = Math.max(0, Math.min(1, normalised));
+          // Ease so the slide-in feels smooth, not abrupt
+          var eased = normalised * normalised * (3 - 2 * normalised);
+          // Slide 2 is at -100vw, slide 3 is at -200vw
+          var translateX = -window.innerWidth * (1 + eased);
+          gsap.set(galleryTrack, { x: translateX });
         }
       }
     },
