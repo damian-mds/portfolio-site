@@ -1,0 +1,13 @@
+# Video files (too large for repo)
+*.mp4
+*.mov
+*.avi
+*.mkv
+*.webm
+*.ogv
+*.wmv
+*.gif
+
+# IDE / macOS
+.idea/
+.DS_Store
