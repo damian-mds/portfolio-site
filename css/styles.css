@@ -370,6 +370,32 @@ html {
     transform: scale(1.03);
 }
 
+/* Scroll indicator — row of dots below project info on slide 2 */
+.scroll-indicator {
+    position: absolute;
+    bottom: 5vh;
+    right: 5vw;
+    z-index: 2;
+    pointer-events: none;
+    display: flex;
+    flex-direction: row-reverse;
+    gap: 8px;
+}
+
+.indicator-dot {
+    display: block;
+    width: 6px;
+    height: 6px;
+    border-radius: 50%;
+    background: rgba(255, 255, 255, 0.25);
+    transition: background 0.3s ease, transform 0.3s ease;
+}
+
+.indicator-dot.active {
+    background: #fff;
+    transform: scale(1.4);
+}
+
 /* Project info — bottom-left corner of each slide */
 .project-info {
     position: absolute;
@@ -538,7 +564,7 @@ html {
     display: flex;
     align-items: center;
     gap: 0.8em;
-    transform: translate(20px, -50%);
+    transform: translate(0px, -50%);
 }
 
 .works-cursor.visible {

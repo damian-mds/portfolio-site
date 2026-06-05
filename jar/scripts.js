@@ -474,6 +474,16 @@ window.addEventListener("load", function () {
     else chPhotos[_cp].classList.remove("active");
   }
 
+  /* Scroll indicator dots (one per photo) */
+  var scrollIndicator = document.querySelector("#slide2-gallery .scroll-indicator");
+  var dots = scrollIndicator ? scrollIndicator.querySelectorAll(".indicator-dot") : [];
+
+  function updateDots(idx) {
+    for (var d = 0; d < dots.length; d++) {
+      dots[d].classList.toggle("active", d === idx);
+    }
+  }
+
   function goPhoto(idx) {
     if (idx === chActive) return;
     chPhotos[chActive].classList.remove("active");
@@ -481,6 +491,7 @@ window.addEventListener("load", function () {
     chPhotos[idx].classList.remove("transitioning");
     chPhotos[idx].classList.add("active");
     chActive = idx;
+    updateDots(idx);
   }
 
   /* Horizontal scroll: pin section, move track left */
@@ -536,6 +547,11 @@ window.addEventListener("load", function () {
         // Slide 2 (index 1) is centered at progress 0.5, spanning 0.33 to 0.67 (full slide width)
         var chStart = 1 / (totalSlides - 1) - 0.5 / (totalSlides - 1);  // 0.333
         var chEnd = 1 / (totalSlides - 1) + 0.5 / (totalSlides - 1);    // 0.667
+
+        // Hide indicator dots outside the gallery zone
+        if (scrollIndicator) {
+          scrollIndicator.style.opacity = (progress >= chStart && progress <= chEnd) ? "1" : "0";
+        }
 
         if (progress >= chStart && progress <= chEnd) {
           // Cycle 8 photos across the ENTIRE gallery zone (100%)
