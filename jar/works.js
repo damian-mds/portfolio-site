@@ -1,36 +1,3 @@
-/* Preload screen for works page */
-(function () {
-    var preload = document.getElementById("preload-screen");
-    var btnSound = document.getElementById("enter-sound");
-    var btnNoSound = document.getElementById("enter-nosound");
-    var navbars = document.querySelectorAll(".brandbar, .navbar");
-
-    if (!preload) return;
-
-    navbars.forEach(function (nav) {
-        nav.style.visibility = "hidden";
-    });
-    document.body.style.overflow = "hidden";
-
-    function enterSite() {
-        preload.classList.add("hidden");
-        navbars.forEach(function (nav) {
-            nav.style.visibility = "visible";
-        });
-        document.body.style.overflow = "";
-        setTimeout(function () {
-            preload.style.display = "none";
-        }, 600);
-    }
-
-    if (btnSound) {
-        btnSound.addEventListener("click", enterSite);
-    }
-    if (btnNoSound) {
-        btnNoSound.addEventListener("click", enterSite);
-    }
-})();
-
 /* Scroll animations: cards fade/slide in */
 (function () {
     if (typeof gsap === "undefined" || typeof ScrollTrigger === "undefined") return;
