@@ -467,11 +467,17 @@ window.addEventListener("load", function () {
   /* --- Chelsea gallery refs (slide index 1, slide 2) --- */
   var chGallery = document.querySelector("#slide2-gallery .chelsea-gallery");
   var chPhotos = chGallery ? chGallery.querySelectorAll(".chelsea-photo") : [];
+  var chBgs = chGallery ? chGallery.querySelectorAll(".chelsea-bg") : [];
   var totalPhotos = chPhotos.length;
   var chActive = 0;
   for (var _cp = 0; _cp < totalPhotos; _cp++) {
-    if (_cp === 0) chPhotos[_cp].classList.add("active");
-    else chPhotos[_cp].classList.remove("active");
+    if (_cp === 0) {
+      chPhotos[_cp].classList.add("active");
+      if (chBgs[_cp]) chBgs[_cp].classList.add("active");
+    } else {
+      chPhotos[_cp].classList.remove("active");
+      if (chBgs[_cp]) chBgs[_cp].classList.remove("active");
+    }
   }
 
   /* Scroll indicator dots (one per photo) */
@@ -487,9 +493,11 @@ window.addEventListener("load", function () {
   function goPhoto(idx) {
     if (idx === chActive) return;
     chPhotos[chActive].classList.remove("active");
+    if (chBgs[chActive]) chBgs[chActive].classList.remove("active");
     chPhotos[chActive].classList.add("transitioning");
     chPhotos[idx].classList.remove("transitioning");
     chPhotos[idx].classList.add("active");
+    if (chBgs[idx]) chBgs[idx].classList.add("active");
     chActive = idx;
     updateDots(idx);
   }
