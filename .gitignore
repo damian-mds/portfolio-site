@@ -1,0 +1,11 @@
+# Docker
+Dockerfile
+docker-compose.yml
+
+# Video files (too large for git, served by nginx/cloudflare)
+site/vid/
+*.mp4
+*.webm
+
+# Local environment
+.env
